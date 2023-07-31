@@ -5,7 +5,7 @@ from sumy.summarizers.text_rank import TextRankSummarizer
 
 app = Flask(__name__)
 
-@app.route("/get-summary/<text>", methods=['GET'])
+@app.route("/<text>", methods=['GET'])
 def get_summary(text):
 
     parser = PlaintextParser.from_string(text, Tokenizer("english"))
