@@ -13,7 +13,37 @@ def get_name(name):
         "Welcome": f"Welcome to the summarize extension,{name}!"
     }
 
-    return jsonify(msg)
+    return jsonify(msg), 200
+
+@app.route("/summarize", methods=['POST'])
+def summarize():
+    text = request.data.decode('utf-8')
+
+    if not text:
+        error_msg = {
+            "ERROR": "No text found"
+       }
+        
+        return jsonify(error_msg)
+    
+    else:
+        parser = PlaintextParser.from_string(text, Tokenizer("english"))
+        summarizer = TextRankSummarizer()
+        SUMMARYLENGTH = 5
+
+        summary = summarizer(parser.document, SUMMARYLENGTH)
+
+        large_sentence = ""
+        for sentence in summary:
+            large_sentence += " " + str(sentence)
+
+        text_response = {
+            "text": large_sentence,
+            "success": True,
+            "accessed": "Yes, access successful"
+        }
+
+        return jsonify(text_response), 200
 
 @app.route("/getsummary/<text>", methods=['GET'])
 def get_summary(text):
