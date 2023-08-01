@@ -5,6 +5,16 @@ from sumy.summarizers.text_rank import TextRankSummarizer
 
 app = Flask(__name__)
 
+
+@app.route("/testing/<name>")
+def get_name(name):
+
+    msg = {
+        "Welcome": f"Welcome to the summarize extension,{name}!"
+    }
+
+    return jsonify(msg)
+
 @app.route("/getsummary/<text>", methods=['GET'])
 def get_summary(text):
 
