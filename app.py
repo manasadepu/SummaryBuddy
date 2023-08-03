@@ -3,6 +3,7 @@ from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.text_rank import TextRankSummarizer
 
+
 app = Flask(__name__)
 
 @app.errorhandler(500)
