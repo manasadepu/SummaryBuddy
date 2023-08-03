@@ -5,6 +5,10 @@ from sumy.summarizers.text_rank import TextRankSummarizer
 
 app = Flask(__name__)
 
+@app.errorhandler(500)
+def handle_500(error):
+    app.logger.error(f"Internal error: {error}")
+    return jsonify({"error": "Internal Server Error"}), 500
 
 @app.route("/testing/<name>")
 def get_name(name):
