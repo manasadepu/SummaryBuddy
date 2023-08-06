@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.text_rank import TextRankSummarizer
@@ -10,6 +10,11 @@ app = Flask(__name__)
 def handle_500(error):
     app.logger.error(f"Internal error: {error}")
     return jsonify({"error": "Internal Server Error"}), 500
+
+
+@app.route("/welcome")
+def welcome():
+    return render_template('html\welcome.html')
 
 @app.route("/testing/<name>")
 def get_name(name):
