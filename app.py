@@ -7,6 +7,8 @@ from sumy.summarizers.text_rank import TextRankSummarizer
 app = Flask(__name__)
 app = Flask(__name__, template_folder='templates')
 
+SUMMARYRATIO = 0.2
+
 
 @app.errorhandler(500)
 def handle_500(error):
@@ -40,10 +42,10 @@ def summarize():
     
     else:
         parser = PlaintextParser.from_string(text, Tokenizer("english"))
+        text_length = len(parser.document.sentences)
         summarizer = TextRankSummarizer()
-        SUMMARYLENGTH = 5
-
-        summary = summarizer(parser.document, SUMMARYLENGTH)
+        summary_length = max(1, int(text_length * SUMMARYRATIO))
+        summary = summarizer(parser.document, summary_length)
 
         large_sentence = ""
         for sentence in summary:
