@@ -14,7 +14,7 @@ def handle_500(error):
 
 @app.route("/welcome")
 def welcome():
-    return render_template('html\welcome.html')
+    return render_template('html/welcome.html')
 
 @app.route("/testing/<name>")
 def get_name(name):
